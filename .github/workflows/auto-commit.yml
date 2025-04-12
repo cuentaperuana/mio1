@@ -18,8 +18,8 @@ jobs:
 
       - name: Configurar Git
         run: |
-          git config --global user.name "luisrru"
-          git config --global user.email "luis_ruiz_97@hotmail.es"
+          git config --global user.name "cuentaperuana"
+          git config --global user.email "cuentaperuana@outlook.com"
 
       - name: Commit y push
         run: |
