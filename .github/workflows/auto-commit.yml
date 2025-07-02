@@ -8,7 +8,7 @@ jobs:
   commit:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Agrega permisos de escritura
+      contents: write # Necesario para poder hacer push
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -25,4 +25,4 @@ jobs:
         run: |
           git add .
           git commit -m "Commit automático - $(date)" || echo "Sin cambios para commit"
-          git push
+          git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
