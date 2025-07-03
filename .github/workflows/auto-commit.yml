@@ -2,19 +2,20 @@ name: Auto Commit
 
 on:
   schedule:
-    - cron: "0 10 * * *" # Ejecuta todos los días a las 10 AM UTC
+    - cron: "0 10 * * *" # Todos los días a las 10 AM UTC
 
 jobs:
   commit:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Necesario para poder hacer push
+      contents: write
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Hacer cambios
-        run: echo "Actualización automática - $(date)" >> daily_commit.txt
+      - name: Hacer cambios diarios
+        run: echo "Última actualización: $(date -u)" > daily_commit.txt
 
       - name: Configurar Git
         run: |
@@ -23,6 +24,6 @@ jobs:
 
       - name: Commit y push
         run: |
-          git add .
-          git commit -m "Commit automático - $(date)" || echo "Sin cambios para commit"
+          git add daily_commit.txt
+          git commit -m "Commit automático - $(date -u)"
           git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
