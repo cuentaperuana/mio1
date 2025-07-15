@@ -25,5 +25,5 @@ jobs:
       - name: Commit y push
         run: |
           git add daily_commit.txt
-          git commit -m "Commit automático - $(date -u)"
-          git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git commit -m "Commit automático - $(date -u)" || echo "Sin cambios"
+          git push origin HEAD
