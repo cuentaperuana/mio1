@@ -1,29 +1,28 @@
-name: Auto Commit
+name: Random Daily Commit
 
 on:
   schedule:
-    - cron: "0 10 * * *" # Todos los días a las 10 AM UTC
+    - cron: '32 12 * * *' # Hora en UTC – cambia para que parezca más natural
+  workflow_dispatch:
 
 jobs:
-  commit:
+  auto-commit:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Hacer cambios diarios
-        run: echo "Última actualización: $(date -u)" > daily_commit.txt
-
-      - name: Configurar Git
+      - name: Randomize file content
         run: |
-          git config --global user.name "cuentaperuana"
+          echo "$(date) - Random content $RANDOM" >> activity.log
+
+      - name: Git config
+        run: |
           git config --global user.email "cuentaperuana@outlook.com"
+          git config --global user.name "cuentaperuana"
 
-      - name: Commit y push
+      - name: Commit changes
         run: |
-          git add daily_commit.txt
-          git commit -m "Commit automático - $(date -u)" || echo "Sin cambios"
-          git push origin HEAD
+          git add activity.log
+          git commit -m "Daily commit 🤖" || echo "No changes to commit"
+          git push
